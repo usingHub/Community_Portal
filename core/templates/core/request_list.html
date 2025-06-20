@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block title %}All Requests{% endblock %}
+
+{% block extra_css %}
+<style>
+    .request-card {
+        border-left: 6px solid #6610f2;
+        background: #f3e8ff;
+        padding: 15px;
+        margin-bottom: 1rem;
+        border-radius: 10px;
+    }
+    .request-card h5 {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h2 class="mb-3">Help Requests</h2>
+    {% for req in requests %}
+        <div class="request-card">
+            <h5>📢 {{ req.title }}</h5>
+            <p>{{ req.description }}</p>
+            <small>Status: <strong>{{ req.status }}</strong> | By: {{ req.user.username }}</small>
+        </div>
+    {% empty %}
+        <p>No requests posted yet.</p>
+    {% endfor %}
+{% endblock %}

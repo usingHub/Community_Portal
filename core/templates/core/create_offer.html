@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Create an Offer{% endblock %}
+
+{% block extra_css %}
+<style>
+    h2 {
+        color: #198754; /* Bootstrap success green */
+        font-weight: bold;
+    }
+    .offer-form {
+        background-color: #e9f7ef;
+        padding: 20px;
+        border-radius: 12px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h2>Create a New Resource Offer</h2>
+    <div class="offer-form shadow">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Submit Offer</button>
+        </form>
+    </div>
+{% endblock %}

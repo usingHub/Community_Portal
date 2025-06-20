@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Offers Available{% endblock %}
+
+{% block extra_css %}
+<style>
+    .offer-card {
+        border-left: 6px solid #ffc107;
+        background: #fff3cd;
+        padding: 15px;
+        margin-bottom: 1rem;
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h2>Available Offers</h2>
+    {% for offer in offers %}
+        <div class="offer-card">
+            <h5>{{ offer.title }}</h5>
+            <p>{{ offer.description }}</p>
+            <small>Status: <strong>{{ offer.status }}</strong> | By: {{ offer.user.username }}</small>
+        </div>
+    {% empty %}
+        <p>No offers available yet.</p>
+    {% endfor %}
+{% endblock %}
