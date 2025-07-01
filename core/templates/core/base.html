@@ -19,9 +19,23 @@
         <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="{% url 'request_list' %}">Requests</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'offer_list' %}">Offers</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'create_request' %}">New Request</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'create_offer' %}">New Offer</a></li>
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'create_request' %}">New Request</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'create_offer' %}">New Offer</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'add_category' %}">Add Category</a></li>
+
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link" style="padding: 0; color: white;">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+            {% endif %}
         </ul>
+
     </div>
 </nav>
 

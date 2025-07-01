@@ -20,7 +20,14 @@
         <div class="offer-card">
             <h5>{{ offer.title }}</h5>
             <p>{{ offer.description }}</p>
-            <small>Status: <strong>{{ offer.status }}</strong> | By: {{ offer.user.username }}</small>
+            <small>
+                {% if offer.linked_request and offer.linked_request.status == 'fulfilled' %}
+                    Claimed by {{ offer.linked_request.user.username }}
+                {% else %}
+                    Status: <strong>{{ offer.status|title }}</strong>
+                {% endif %}
+                | By: {{ offer.user.username }}
+            </small>
         </div>
     {% empty %}
         <p>No offers available yet.</p>

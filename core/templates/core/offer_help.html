@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Offer Help</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ request_item.title }}</h5>
+        <p class="card-text">{{ request_item.description }}</p>
+        <p><strong>Category:</strong> {{ request_item.category }}</p>
+        <p><strong>Location:</strong> {{ request_item.location }}</p>
+        <p><strong>Status:</strong> {{ request_item.status }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Confirm Offer Help</button>
+            <a href="{% url 'request_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

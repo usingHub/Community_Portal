@@ -2,21 +2,14 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
-
 # -------------------------
 # Custom User Model
 # -------------------------
 class CustomUser(AbstractUser):
-    USER_ROLES = (
-        ('requester', 'Requester'),
-        ('donor', 'Donor'),
-        ('admin', 'Admin'),
-    )
-    role = models.CharField(max_length=20, choices=USER_ROLES, default='requester')
     location = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.username} ({self.get_role_display()})"
+        return self.username
 
 
 # -------------------------
@@ -74,9 +67,15 @@ class Offer(models.Model):
     location = models.CharField(max_length=100)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
     created_at = models.DateTimeField(default=timezone.now)
+    linked_request = models.ForeignKey(Request, null=True, blank=True, on_delete=models.CASCADE, related_name='offers')
 
     class Meta:
         ordering = ['-created_at']
 
     def __str__(self):
         return f"{self.title} ({self.status})"
+
+    def save(self, *args, **kwargs):
+        if self.linked_request and self.linked_request.status == 'fulfilled':
+            self.status = 'claimed'
+        super().save(*args, **kwargs)
