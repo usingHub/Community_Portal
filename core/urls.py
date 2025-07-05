@@ -16,7 +16,10 @@ urlpatterns = [
     path('offers/new/', views.create_offer, name='create_offer'),
     path('categories/new/', views.add_category, name='add_category'),
     path('requests/<int:request_id>/offer_help/', views.offer_help, name='offer_help'),
+    path('offers/<int:offer_id>/claim/', views.claim_offer, name='claim_offer'),
+    path('offers/<int:offer_id>/delete/', views.delete_offer, name='delete_offer'),
     path('requests/delete/<int:request_id>/', views.delete_request, name='delete_request'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
 
 
 ]

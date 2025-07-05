@@ -7,6 +7,7 @@ from django.utils import timezone
 # -------------------------
 class CustomUser(AbstractUser):
     location = models.CharField(max_length=100, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.username

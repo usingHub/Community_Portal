@@ -1,34 +1,50 @@
 {% extends 'core/base.html' %}
+{% block title %}All Requests{% endblock %}
+
 {% block content %}
-<h2>All Requests</h2>
+<h2 class="mb-4">All Requests</h2>
+<div class="row g-3">
+  {% for req in requests %}
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ req.title }}</h5>
+          <p class="card-text">{{ req.description }}</p>
+          <ul class="list-inline mt-auto">
+            <li class="list-inline-item">
+              <span class="badge bg-secondary">{{ req.category.name }}</span>
+            </li>
+            <li class="list-inline-item">
+              <span class="badge bg-info text-dark">{{ req.location }}</span>
+            </li>
+            <li class="list-inline-item">
+              {% if req.status == 'pending' %}
+                <span class="badge bg-warning">Pending</span>
+              {% elif req.status == 'fulfilled' %}
+                <span class="badge bg-success">Fulfilled</span>
+              {% else %}
+                <span class="badge bg-danger">Cancelled</span>
+              {% endif %}
+            </li>
+          </ul>
 
-<ul class="list-group">
-    {% for req in requests %}
-        <div class="card mb-3">
-            <div class="card-body">
-            <h5 class="card-title">{{ req.title }}</h5>
-            <p class="card-text">{{ req.description }}</p>
-            <p><strong>Category:</strong> {{ req.category }}</p>
-            <p><strong>Location:</strong> {{ req.location }}</p>
-            <p><strong>Status:</strong> {{ req.status|title }}</p>
-
+          <div class="mt-3">
             {% if req.user == request.user %}
-                <!-- User's own request -->
-                <form method="post" action="{% url 'delete_request' req.id %}">
+              <form method="post" action="{% url 'delete_request' req.id %}" class="d-inline">
                 {% csrf_token %}
-                <button class="btn btn-danger">Delete</button>
-                </form>
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </form>
             {% elif req.status != 'fulfilled' %}
-                <!-- Request from other user and not fulfilled -->
-                <a href="{% url 'offer_help' req.id %}" class="btn btn-primary">Offer Help</a>
+              <a href="{% url 'offer_help' req.id %}" class="btn btn-sm btn-primary">Offer Help</a>
             {% else %}
-                <!-- Fulfilled request -->
-                <span class="badge bg-success">Already Fulfilled</span>
+              <button class="btn btn-sm btn-outline-success" disabled>Fulfilled</button>
             {% endif %}
-            </div>
+          </div>
         </div>
-        
-    {% endfor %}
-
-</ul>
+      </div>
+    </div>
+  {% empty %}
+    <p>No requests found.</p>
+  {% endfor %}
+</div>
 {% endblock %}
