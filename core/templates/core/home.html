@@ -1,21 +1,26 @@
 {% extends 'core/base.html' %}
-
 {% block title %}Welcome | Community Portal{% endblock %}
 
 {% block extra_css %}
 <style>
-    .welcome {
-        text-align: center;
-        margin-top: 50px;
-    }
+  .welcome {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    background-color: #ffffffdd;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="welcome">
-    <h1>🌍 Welcome to the Community Portal</h1>
-    <p class="lead">Help your neighbors. Share resources. Make a difference.</p>
-    <a href="{% url 'create_request' %}" class="btn btn-primary m-2">Create Request</a>
-    <a href="{% url 'create_offer' %}" class="btn btn-success m-2">Offer Help</a>
+  <h1 class="display-5">🌍 Welcome to the Community Portal</h1>
+  <p class="lead">Help your neighbors. Share resources. Make a difference.</p>
+  <div class="mt-4">
+    <a href="{% url 'create_request' %}" class="btn btn-outline-primary m-2 px-4 py-2">➕ Create Request</a>
+    <a href="{% url 'create_offer' %}" class="btn btn-outline-success m-2 px-4 py-2">🤝 Offer Help</a>
+  </div>
 </div>
 {% endblock %}
